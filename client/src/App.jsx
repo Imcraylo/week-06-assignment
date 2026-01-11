@@ -41,7 +41,28 @@ function App() {
 
   // functions(event handlers)
   // - when a user clicks an image
+  function clickThumbnail(i) {
+    setCurrentImageIndex(i);
+  }
   // - when a user presses a button that should switch the image (left and right)
+  // when user clicks the "prev button" function should travel (-1) index back to the previous thumbnail, when function reaches the first image, it should loop back to the last image of the thumbnail container
+  function prevButton() {
+    if (currentImageIndex - 1 < 0) {
+      setCurrentImageIndex(images.length - 1);
+    } else {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  }
+
+  // when user clicks the "next button" function should travel (1) index towards the next thumbnail, when function reaches the last image, it should loop back to the first image of the thumbnail container
+  function nextButton() {
+    if (currentImageIndex + 1 > images.length - 1) {
+      setCurrentImageIndex(currentImageIndex 0);
+    }
+    else {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  }
 
   return (
     <>
@@ -49,8 +70,12 @@ function App() {
       <div className="thumbnail-container"></div>
       // One big image, or a modal that is only sometimes there
       <div className="fullscreen-container"></div>
-      <button></button>
-      <button></button>
+      <button onClick={prevButton} className="prev">
+        {"<"}
+      </button>
+      <button onClick={nextButton} className="next">
+        {">"}
+      </button>
     </>
   );
 }
