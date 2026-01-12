@@ -1,6 +1,6 @@
 // ! PUT ALL THE IMPORT BELOW THIS MESSAGE
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import "./App.css";
 
 // ! DO NOT PUT ALL YOUR CODE IN JUST App.jsx
 // ! USE COMPONENTS
@@ -45,6 +45,7 @@ function App() {
     setCurrentImageIndex(i);
   }
   // - when a user presses a button that should switch the image (left and right)
+
   // when user clicks the "prev button" function should travel (-1) index back to the previous thumbnail, when function reaches the first image, it should loop back to the last image of the thumbnail container
   function prevButton() {
     if (currentImageIndex - 1 < 0) {
@@ -57,19 +58,37 @@ function App() {
   // when user clicks the "next button" function should travel (1) index towards the next thumbnail, when function reaches the last image, it should loop back to the first image of the thumbnail container
   function nextButton() {
     if (currentImageIndex + 1 > images.length - 1) {
-      setCurrentImageIndex(currentImageIndex 0);
-    }
-    else {
+      setCurrentImageIndex(0);
+    } else {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   }
 
   return (
     <>
-      // Thumbnail container, showing all the images using .map()
-      <div className="thumbnail-container"></div>
-      // One big image, or a modal that is only sometimes there
-      <div className="fullscreen-container"></div>
+      {/* Thumbnail container, showing all the images using .map */}
+      <div className="thumbnail-container">
+        {images.map((image, index) => {
+          return (
+            <button
+              className="image-button"
+              key={image.id}
+              onClick={() => clickThumbnail(index)}
+            >
+              <img src={image.urls.thumb} alt={image.alt_description} />
+            </button>
+          );
+        })}
+      </div>
+      {/* // One big image, or a modal that is only sometimes there */}
+      <div className="fullscreen-container">
+        {images.length && (
+          <img
+            src={images[currentImageIndex].urls.full}
+            alt={images[currentImageIndex].alt_description}
+          />
+        )}
+      </div>
       <button onClick={prevButton} className="prev">
         {"<"}
       </button>
